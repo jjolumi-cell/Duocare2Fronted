@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Duocare2.Views.FichaPage"
+             BackgroundColor="#F2F2F7"
+             Title="Ficha">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="25" Spacing="25">
+
+            <!-- Título -->
+            <Label Text="Ficha del menor / mascota"
+                   FontSize="30"
+                   HorizontalOptions="Center"
+                   TextColor="#1A1A1A"
+                   FontAttributes="Bold"/>
+
+            <!-- Tarjeta -->
+            <Frame BackgroundColor="White"
+                   CornerRadius="25"
+                   Padding="25"
+                   HasShadow="True"
+                   BorderColor="#DADADA">
+
+                <VerticalStackLayout Spacing="22">
+                    <!-- FOTO -->
+                    <VerticalStackLayout Spacing="5">
+                        <Label Text="Foto"
+           FontSize="17"
+           TextColor="#1A1A1A"
+           FontAttributes="Bold"/>
+
+                        <Frame BackgroundColor="#EFEFEF"
+           CornerRadius="15"
+           Padding="0"
+           HeightRequest="160"
+           HorizontalOptions="Center">
+
+                            <Image Source="{Binding Foto}"
+               Aspect="AspectFill"
+               HeightRequest="160"
+               WidthRequest="160">
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding SeleccionarFotoCommand}" />
+                                </Image.GestureRecognizers>
+                            </Image>
+
+                        </Frame>
+                    </VerticalStackLayout>
+
+                    <!-- NOMBRE -->
+                    <VerticalStackLayout Spacing="5">
+                        <Label Text="Nombre"
+           FontSize="17"
+           TextColor="#1A1A1A"
+           FontAttributes="Bold"/>
+
+                        <Frame BackgroundColor="#FFFFFF"
+           BorderColor="#C7C7CC"
+           CornerRadius="12"
+           Padding="10">
+
+                            <Entry Placeholder="Introduce el nombre"
+               Text="{Binding Nombre}"
+               TextColor="Black"
+               PlaceholderColor="#8E8E93"
+               BackgroundColor="Transparent"/>
+                        </Frame>
+                    </VerticalStackLayout>
+
+                    <!-- TIPO  -->
+                    <VerticalStackLayout Spacing="5">
+                        <Label Text="Tipo"
+           FontSize="17"
+           TextColor="#1A1A1A"
+           FontAttributes="Bold"/>
+
+                        <Frame BackgroundColor="#FFFFFF"
+           BorderColor="#C7C7CC"
+           CornerRadius="12"
+           Padding="10">
+
+                            <Picker Title="Selecciona tipo"
+                ItemsSource="{Binding Tipos}"
+                SelectedItem="{Binding Tipo, Mode=TwoWay}"
+                TextColor="Black"
+                BackgroundColor="Transparent"/>
+                        </Frame>
+                    </VerticalStackLayout>
+
+                    <!-- FECHA NACIMIENTO -->
+                    <VerticalStackLayout Spacing="5">
+                        <Label Text="Fecha de nacimiento"
+           FontSize="17"
+           TextColor="#1A1A1A"
+           FontAttributes="Bold"/>
+
+                        <Frame BackgroundColor="#FFFFFF"
+           BorderColor="#C7C7CC"
+           CornerRadius="12"
+           Padding="10">
+
+                            <DatePicker Date="{Binding FechaNacimiento}"
+                    TextColor="Black"
+                    BackgroundColor="Transparent"/>
+                        </Frame>
+                    </VerticalStackLayout>
+
+                    <!-- NOTAS -->
+                    <VerticalStackLayout Spacing="5">
+                        <Label Text="Notas"
+           FontSize="17"
+           TextColor="#1A1A1A"
+           FontAttributes="Bold"/>
+
+                        <Frame BackgroundColor="#FFFFFF"
+           BorderColor="#C7C7CC"
+           CornerRadius="12"
+           Padding="10">
+
+                            <Editor Placeholder="Escribe aquí cualquier información importante"
+                Text="{Binding Notas}"
+                TextColor="Black"
+                PlaceholderColor="#8E8E93"
+                AutoSize="TextChanges"
+                BackgroundColor="Transparent"/>
+                        </Frame>
+                    </VerticalStackLayout>
+
+                    <!-- BOTÓN GUARDAR -->
+                    <Button Text="Guardar"
+        Command="{Binding GuardarCommand}"
+        BackgroundColor="#5A4FCF"
+        TextColor="White"
+        CornerRadius="15"
+        HeightRequest="50"
+        FontSize="18"
+        FontAttributes="Bold"/>
+
+
+                </VerticalStackLayout>
+
+            </Frame>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

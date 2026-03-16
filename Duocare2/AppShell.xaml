@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="Duocare2.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:views="clr-namespace:Duocare2.Views">
+
+    <!-- ENCABEZADO DEL MENÚ LATERAL -->
+    <Shell.FlyoutHeader>
+        ...
+    </Shell.FlyoutHeader>
+
+    <!-- MENÚ LATERAL -->
+    <FlyoutItem Title="Inicio" Route="home">
+        <ShellContent ContentTemplate="{DataTemplate views:HomePage}" />
+    </FlyoutItem>
+
+    <FlyoutItem Title="Medicamentos">
+        <ShellContent ContentTemplate="{DataTemplate views:MedicamentosPage}" />
+    </FlyoutItem>
+
+    <FlyoutItem Title="Paseos">
+        <ShellContent ContentTemplate="{DataTemplate views:PaseosPage}" />
+    </FlyoutItem>
+
+    <FlyoutItem Title="Extraescolares">
+        <ShellContent ContentTemplate="{DataTemplate views:ExtraescolaresPage}" />
+    </FlyoutItem>
+
+    <FlyoutItem Title="Alergias">
+        <ShellContent ContentTemplate="{DataTemplate views:AlergiasPage}" />
+    </FlyoutItem>
+
+    <!-- RUTAS EXTRA (necesarias para navegar) -->
+    <ShellContent Route="login" ContentTemplate="{DataTemplate views:LoginPage}" />
+    <ShellContent Route="register" ContentTemplate="{DataTemplate views:RegisterPage}" />
+    <ShellContent Route="forgotpassword" ContentTemplate="{DataTemplate views:ForgotPasswordPage}" />
+
+</Shell>

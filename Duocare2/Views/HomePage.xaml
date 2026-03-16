@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Duocare2.Views.HomePage"
+             BackgroundColor="#F4F4F4"
+             Title="Panel de custodia">
+
+    <VerticalStackLayout Padding="20" Spacing="25">
+
+        <Label Text="Panel de custodia"
+               FontSize="32"
+               HorizontalOptions="Center"
+               TextColor="#4A4A4A"
+               FontAttributes="Bold"/>
+
+        <Grid ColumnDefinitions="*,*"
+              ColumnSpacing="20">
+
+            <!-- TARJETA NIÑO -->
+            <Frame BackgroundColor="White"
+                   CornerRadius="20"
+                   Padding="20"
+                   HasShadow="True">
+
+                <VerticalStackLayout Spacing="15">
+
+                    <Label Text="Niño"
+                           FontSize="22"
+                           TextColor="#4A4A4A"
+                           FontAttributes="Bold"/>
+
+                    <Label Text="{Binding NombreNiño}"
+                           TextColor="#6A6A6A"
+                           FontSize="16"/>
+
+                    <Frame BackgroundColor="#A8D0FF"
+                           CornerRadius="15"
+                           Padding="20">
+
+                        <Label Text="Calendario niño"
+                               HorizontalOptions="Center"
+                               TextColor="White"
+                               FontSize="18"
+                               FontAttributes="Bold"/>
+                    </Frame>
+
+                </VerticalStackLayout>
+
+            </Frame>
+
+            <!-- TARJETA MASCOTA -->
+            <Frame BackgroundColor="White"
+                   CornerRadius="20"
+                   Padding="20"
+                   HasShadow="True">
+
+                <VerticalStackLayout Spacing="15">
+
+                    <Label Text="Mascota"
+                           FontSize="22"
+                           TextColor="#4A4A4A"
+                           FontAttributes="Bold"/>
+
+                    <Label Text="{Binding NombreMascota}"
+                           TextColor="#6A6A6A"
+                           FontSize="16"/>
+
+                    <Frame BackgroundColor="#FFCCB3"
+                           CornerRadius="15"
+                           Padding="20">
+
+                        <Label Text="Calendario mascota"
+                               HorizontalOptions="Center"
+                               TextColor="White"
+                               FontSize="18"
+                               FontAttributes="Bold"/>
+                    </Frame>
+
+                </VerticalStackLayout>
+
+            </Frame>
+
+        </Grid>
+
+    </VerticalStackLayout>
+
+</ContentPage>

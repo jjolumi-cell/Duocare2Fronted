@@ -4,7 +4,6 @@
              x:Class="Duocare2.Views.RegisterPage"
              Title="Crear cuenta">
 
-    <!-- FONDO BONITO -->
     <ContentPage.Background>
         <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
             <GradientStop Color="#A8C5FF" Offset="0.0" />
@@ -33,6 +32,7 @@
 
                 <VerticalStackLayout Spacing="25">
 
+                    <!-- Nombre -->
                     <VerticalStackLayout Spacing="8">
                         <Label Text="Nombre completo"
                                FontSize="15"
@@ -50,6 +50,7 @@
                         </Frame>
                     </VerticalStackLayout>
 
+                    <!-- Correo -->
                     <VerticalStackLayout Spacing="8">
                         <Label Text="Correo electrónico"
                                FontSize="15"
@@ -68,6 +69,7 @@
                         </Frame>
                     </VerticalStackLayout>
 
+                    <!-- Contraseña -->
                     <VerticalStackLayout Spacing="8">
                         <Label Text="Contraseña"
                                FontSize="15"
@@ -84,6 +86,31 @@
                                    PlaceholderColor="#9AA4B1"
                                    BackgroundColor="Transparent"/>
                         </Frame>
+                    </VerticalStackLayout>
+
+                    <!-- Repetir contraseña -->
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="Repite la contraseña"
+                               FontSize="15"
+                               TextColor="#3A3A3A"
+                               FontAttributes="Bold"/>
+
+                        <Frame BackgroundColor="#F7F9FC"
+                               CornerRadius="12"
+                               Padding="12"
+                               BorderColor="{Binding ConfirmPasswordBorderColor}">
+                            <Entry Placeholder="Repite tu contraseña"
+                                   Text="{Binding ConfirmPassword}"
+                                   IsPassword="True"
+                                   TextColor="#1A1A1A"
+                                   PlaceholderColor="#9AA4B1"
+                                   BackgroundColor="Transparent"/>
+                        </Frame>
+
+                        <Label Text="{Binding ConfirmPasswordMessage}"
+                               FontSize="13"
+                               TextColor="{Binding ConfirmPasswordMessageColor}"
+                               HorizontalOptions="Start"/>
                     </VerticalStackLayout>
 
                     <Button Text="Registrarse"
@@ -106,7 +133,6 @@
                     <TapGestureRecognizer Command="{Binding IrALoginCommand}" />
                 </Label.GestureRecognizers>
             </Label>
-
 
         </VerticalStackLayout>
     </ScrollView>

@@ -4,7 +4,6 @@
              x:Class="Duocare2.Views.LoginPage"
              Title="Iniciar sesión">
 
-    <!-- FONDO BONITO (igual que RegisterPage) -->
     <ContentPage.Background>
         <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
             <GradientStop Color="#A8C5FF" Offset="0.0" />
@@ -16,7 +15,7 @@
         <VerticalStackLayout Padding="30" Spacing="30">
 
             <!-- Título -->
-            <Label Text="Duocare2"
+            <Label Text="Duocare"
                    FontSize="36"
                    HorizontalOptions="Center"
                    TextColor="#2A2A2A"
@@ -73,6 +72,15 @@
                         </Frame>
                     </VerticalStackLayout>
 
+                    <!-- Recordar contraseña -->
+                    <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
+                        <CheckBox IsChecked="{Binding RememberMe}" Color="#5A8CFF"/>
+                        <Label Text="Recordar contraseña"
+                               VerticalOptions="Center"
+                               TextColor="#3A3A3A"
+                               FontSize="15"/>
+                    </HorizontalStackLayout>
+
                     <!-- Botón iniciar sesión -->
                     <Button Text="Iniciar sesión"
                             Command="{Binding LoginCommand}"
@@ -83,7 +91,7 @@
                             FontSize="18"
                             FontAttributes="Bold"/>
 
-                    <!-- Registrarse (clicable) -->
+                    <!-- Registrarse -->
                     <Label Text="¿No tienes cuenta? Regístrate"
                            HorizontalOptions="Center"
                            TextColor="#4A6CFF"
@@ -95,13 +103,14 @@
 
                     <!-- Recuperar contraseña -->
                     <Label Text="¿Has olvidado tu contraseña?"
-                            HorizontalOptions="Center"
-                            TextColor="#4A6CFF"
-                            FontAttributes="Bold">
+                           HorizontalOptions="Center"
+                           TextColor="#4A6CFF"
+                           FontAttributes="Bold">
                         <Label.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding ForgotPasswordCommand}" />
                         </Label.GestureRecognizers>
                     </Label>
+
                 </VerticalStackLayout>
 
             </Frame>
@@ -110,4 +119,3 @@
     </ScrollView>
 
 </ContentPage>
-

@@ -1,4 +1,5 @@
 using System.Windows.Input;
+using CommunityToolkit.Mvvm.Messaging;
 
 namespace Duocare2.ViewModels;
 
@@ -44,7 +45,7 @@ public class LoginViewModel : BaseViewModel
     public LoginViewModel()
     {
         LoginCommand = new Command(OnLogin);
-        GoRegisterCommand = new Command(() => Shell.Current.GoToAsync("register"));
+        GoRegisterCommand = new Command(() => Shell.Current.GoToAsync("registro"));
         ForgotPasswordCommand = new Command(OnForgotPassword);
 
         LoadSavedCredentials();
@@ -78,11 +79,40 @@ public class LoginViewModel : BaseViewModel
             SecureStorage.Remove("saved_password");
         }
 
+        // EXTRAER SOLO EL NOMBRE (antes del @)
+        var nombre = Email.Split('@')[0];
+
+        // GUARDAR NOMBRE
+        Preferences.Set("NombrePadre", nombre);
+
+        // ENVIAR MENSAJE AL MENÚ
+        WeakReferenceMessenger.Default.Send(new ParentNameMessage(nombre));
+
+        // 🔥 COMPROBAR SI TIENE FICHA
+        bool tieneFicha = Preferences.Get("TieneFicha", false);
+
+        if (!tieneFicha)
+        {
+            bool crear = await Application.Current.MainPage.DisplayAlert(
+                "Ficha necesaria",
+                "Aún no has creado la ficha del niño. ¿Quieres crearla ahora?",
+                "Sí",
+                "No"
+            );
+
+            if (crear)
+            {
+                await Shell.Current.GoToAsync("ficha");
+                return;
+            }
+        }
+
+        // NAVEGAR A HOME
         await Shell.Current.GoToAsync("//home");
     }
 
     private async void OnForgotPassword()
     {
-        await Shell.Current.GoToAsync("///forgotpassword");
+        await Shell.Current.GoToAsync("forgotpassword");
     }
 }

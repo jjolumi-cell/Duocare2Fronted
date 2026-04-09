@@ -1,11 +1,12 @@
 using Duocare2.Services;
 using Duocare2.Models;
+using CommunityToolkit.Mvvm.Messaging;
 
 namespace Duocare2.ViewModels;
 
 public class RegisterViewModel : BaseViewModel
 {
-    public string Nombre { get; set; }
+    public string Name { get; set; }
     public string Email { get; set; }
 
     private string password;
@@ -36,30 +37,42 @@ public class RegisterViewModel : BaseViewModel
     public string ConfirmPasswordMessage
     {
         get => confirmPasswordMessage;
-        set { confirmPasswordMessage = value; OnPropertyChanged(); }
+        set
+        {
+            confirmPasswordMessage = value;
+            OnPropertyChanged();
+        }
     }
 
     private Color confirmPasswordMessageColor;
     public Color ConfirmPasswordMessageColor
     {
         get => confirmPasswordMessageColor;
-        set { confirmPasswordMessageColor = value; OnPropertyChanged(); }
+        set
+        {
+            confirmPasswordMessageColor = value;
+            OnPropertyChanged();
+        }
     }
 
     private Color confirmPasswordBorderColor;
     public Color ConfirmPasswordBorderColor
     {
         get => confirmPasswordBorderColor;
-        set { confirmPasswordBorderColor = value; OnPropertyChanged(); }
+        set
+        {
+            confirmPasswordBorderColor = value;
+            OnPropertyChanged();
+        }
     }
 
     public Command RegisterCommand { get; }
-    public Command IrALoginCommand { get; }
+    public Command GoToLoginCommand { get; }
 
     public RegisterViewModel()
     {
         RegisterCommand = new Command(OnRegister);
-        IrALoginCommand = new Command(OnIrALogin);
+        GoToLoginCommand = new Command(OnGoToLogin);
     }
 
     private void ValidatePasswords()
@@ -87,7 +100,7 @@ public class RegisterViewModel : BaseViewModel
 
     private async void OnRegister()
     {
-        if (string.IsNullOrWhiteSpace(Nombre) ||
+        if (string.IsNullOrWhiteSpace(Name) ||
             string.IsNullOrWhiteSpace(Email) ||
             string.IsNullOrWhiteSpace(Password) ||
             string.IsNullOrWhiteSpace(ConfirmPassword))
@@ -102,12 +115,18 @@ public class RegisterViewModel : BaseViewModel
             return;
         }
 
+        // Guardar nombre del padre para el menú
+        Preferences.Set("ParentName", Name);
+        WeakReferenceMessenger.Default.Send(new ParentNameMessage(Name));
+
         await Application.Current.MainPage.DisplayAlert("Registro", "Registro exitoso", "OK");
-        await Shell.Current.GoToAsync("login");
+
+        // Ir al Home después de registrarse
+        await Shell.Current.GoToAsync("//home");
     }
 
-    private async void OnIrALogin()
+    private async void OnGoToLogin()
     {
-        await Shell.Current.GoToAsync("login");
+        await Shell.Current.GoToAsync("//login");
     }
 }

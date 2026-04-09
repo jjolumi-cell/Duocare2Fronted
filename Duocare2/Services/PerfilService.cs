@@ -7,9 +7,9 @@ public class PerfilService
     private static PerfilService _instancia;
     public static PerfilService Instancia => _instancia ??= new PerfilService();
 
-    public Perfil Perfil { get; private set; }
+    public Profile Perfil { get; private set; }
 
-    public void GuardarPerfil(Perfil perfil)
+    public void GuardarPerfil(Profile perfil)
     {
         Perfil = perfil;
     }

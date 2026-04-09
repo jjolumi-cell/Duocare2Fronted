@@ -1,0 +1,597 @@
+<ContentPage
+    x:Class="Duocare2.Views.ProfilePage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Name="PageRoot"
+    Title="Ficha">
+
+    <Grid>
+
+        <!-- 🖼️ IMAGEN DE FONDO -->
+        <Image Source="fondo.jpg"
+               Aspect="AspectFill"
+               Opacity="1"
+               IsEnabled="False" />
+
+        <!-- CONTENIDO ENCIMA -->
+        <ScrollView>
+            <VerticalStackLayout Padding="25" Spacing="25">
+
+                <!-- TÍTULO -->
+                <Label Text="Ficha del menor / mascota"
+                       FontSize="32"
+                       HorizontalOptions="Center"
+                       TextColor="#1A1A1A"
+                       FontAttributes="Bold"/>
+
+                <!-- SELECTOR DE TABS -->
+                <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
+
+                    <!-- TAB NIÑO -->
+                    <Frame Padding="14,8"
+                           CornerRadius="12"
+                           BorderColor="{Binding TabNiñoBorder}"
+                           BackgroundColor="{Binding TabNiñoBackground}"
+                           HasShadow="True">
+                        <Label Text="Niño/a"
+                               TextColor="{Binding TabNiñoText}"
+                               FontAttributes="Bold"
+                               FontSize="16">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding CambiarTabCommand}"
+                                                      CommandParameter="Niño"/>
+                            </Label.GestureRecognizers>
+                        </Label>
+                    </Frame>
+
+                    <!-- TAB MASCOTA -->
+                    <Frame Padding="14,8"
+                           CornerRadius="12"
+                           BorderColor="{Binding TabMascotaBorder}"
+                           BackgroundColor="{Binding TabMascotaBackground}"
+                           HasShadow="True">
+                        <Label Text="Mascota"
+                               TextColor="{Binding TabMascotaText}"
+                               FontAttributes="Bold"
+                               FontSize="16">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding CambiarTabCommand}"
+                                                      CommandParameter="Mascota"/>
+                            </Label.GestureRecognizers>
+                        </Label>
+                    </Frame>
+
+                    <!-- TAB AMBOS -->
+                    <Frame Padding="14,8"
+                           CornerRadius="12"
+                           BorderColor="{Binding TabAmbosBorder}"
+                           BackgroundColor="{Binding TabAmbosBackground}"
+                           HasShadow="True">
+                        <Label Text="Ambos"
+                               TextColor="{Binding TabAmbosText}"
+                               FontAttributes="Bold"
+                               FontSize="16">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding CambiarTabCommand}"
+                                                      CommandParameter="Ambos"/>
+                            </Label.GestureRecognizers>
+                        </Label>
+                    </Frame>
+
+                </HorizontalStackLayout>
+
+                <!-- ========================= -->
+                <!--        SECCIÓN NIÑO       -->
+                <!-- ========================= -->
+                <Frame BackgroundColor="White"
+                       CornerRadius="25"
+                       Padding="25"
+                       BorderColor="#5A4FCF"
+                       HasShadow="True"
+                       IsVisible="{Binding MostrarNiño}">
+
+                    <VerticalStackLayout Spacing="25">
+
+                        <!-- FOTO NIÑO -->
+                        <VerticalStackLayout Spacing="10" HorizontalOptions="Center">
+                            <Frame HeightRequest="140"
+                                   WidthRequest="140"
+                                   CornerRadius="70"
+                                   BackgroundColor="#E5E5E5"
+                                   HasShadow="True">
+                                <Image Source="{Binding FotoNiño}"
+                                       Aspect="AspectFill"
+                                       HeightRequest="140"
+                                       WidthRequest="140"/>
+                            </Frame>
+
+                            <Button Text="Subir foto"
+                                    BackgroundColor="#5A4FCF"
+                                    TextColor="White"
+                                    CornerRadius="18"
+                                    Command="{Binding SubirFotoNiñoCommand}"/>
+                        </VerticalStackLayout>
+
+                        <!-- LISTA NIÑOS -->
+                        <HorizontalStackLayout Spacing="14">
+                            <Label Text="Niños"
+                                   FontSize="24"
+                                   FontAttributes="Bold"
+                                   TextColor="#5A4FCF"/>
+
+                            <Frame BackgroundColor="#5A4FCF"
+                                   Padding="0"
+                                   CornerRadius="25"
+                                   HeightRequest="40"
+                                   WidthRequest="40"
+                                   HasShadow="True">
+                                <Label Text="+"
+                                       FontSize="26"
+                                       FontAttributes="Bold"
+                                       TextColor="White"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="Center">
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding AñadirNiñoCommand}"/>
+                                    </Label.GestureRecognizers>
+                                </Label>
+                            </Frame>
+                        </HorizontalStackLayout>
+
+                        <CollectionView ItemsSource="{Binding ListaNiños}">
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Frame Padding="18"
+                                           BackgroundColor="#F4EEFF"
+                                           BorderColor="#5A4FCF"
+                                           CornerRadius="18"
+                                           HasShadow="True">
+
+                                        <VerticalStackLayout Spacing="15">
+
+                                            <HorizontalStackLayout HorizontalOptions="End">
+                                                <Frame BackgroundColor="#FFD6D6"
+                                                       Padding="6"
+                                                       CornerRadius="15">
+                                                    <Label Text="🗑️"
+                                                           FontSize="18"
+                                                           TextColor="Red">
+                                                        <Label.GestureRecognizers>
+                                                            <TapGestureRecognizer Command="{Binding BindingContext.EliminarNiñoCommand, Source={x:Reference PageRoot}}"
+                                                                                  CommandParameter="{Binding .}"/>
+                                                        </Label.GestureRecognizers>
+                                                    </Label>
+                                                </Frame>
+                                            </HorizontalStackLayout>
+
+                                            <Entry Placeholder="Nombre"
+                                                   Text="{Binding Nombre}"
+                                                   FontSize="18"
+                                                   FontAttributes="Bold"/>
+
+                                            <DatePicker Date="{Binding FechaNacimiento}"
+                                                        FontSize="16"
+                                                        TextColor="#5A4FCF"/>
+
+                                            <Editor Placeholder="Notas"
+                                                    Text="{Binding Notas}"
+                                                    AutoSize="TextChanges"/>
+                                        </VerticalStackLayout>
+
+                                    </Frame>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+
+                        <!-- CAMPOS GENERALES NIÑO -->
+                        <Editor Placeholder="Alergias"
+                                Text="{Binding AlergiasNiño}"
+                                AutoSize="TextChanges"/>
+
+                        <Editor Placeholder="Medicaciones importantes"
+                                Text="{Binding MedicacionNiño}"
+                                AutoSize="TextChanges"/>
+
+                        <Editor Placeholder="Rutinas importantes (comidas, siestas, hábitos...)"
+                                Text="{Binding RutinasNiño}"
+                                AutoSize="TextChanges"/>
+
+                        <VerticalStackLayout Spacing="10">
+                            <Label Text="Contacto de emergencia"
+                                   FontSize="18"
+                                   FontAttributes="Bold"
+                                   TextColor="#5A4FCF"/>
+
+                            <Entry Placeholder="Nombre"
+                                   Text="{Binding ContactoNombreNiño}"/>
+
+                            <Entry Placeholder="Teléfono"
+                                   Text="{Binding ContactoTelefonoNiño}"
+                                   Keyboard="Telephone"/>
+                        </VerticalStackLayout>
+
+                    </VerticalStackLayout>
+                </Frame>
+
+                <!-- ========================= -->
+                <!--      SECCIÓN MASCOTA     -->
+                <!-- ========================= -->
+                <Frame BackgroundColor="White"
+                       CornerRadius="25"
+                       Padding="25"
+                       BorderColor="#FF8C42"
+                       HasShadow="True"
+                       IsVisible="{Binding MostrarMascota}">
+
+                    <VerticalStackLayout Spacing="25">
+
+                        <!-- FOTO MASCOTA -->
+                        <VerticalStackLayout Spacing="10" HorizontalOptions="Center">
+                            <Frame HeightRequest="140"
+                                   WidthRequest="140"
+                                   CornerRadius="70"
+                                   BackgroundColor="#FFE4D1"
+                                   HasShadow="True">
+                                <Image Source="{Binding FotoMascota}"
+                                       Aspect="AspectFill"
+                                       HeightRequest="140"
+                                       WidthRequest="140"/>
+                            </Frame>
+
+                            <Button Text="Subir foto"
+                                    BackgroundColor="#FF8C42"
+                                    TextColor="White"
+                                    CornerRadius="18"
+                                    Command="{Binding SubirFotoMascotaCommand}"/>
+                        </VerticalStackLayout>
+
+                        <!-- LISTA MASCOTAS -->
+                        <HorizontalStackLayout Spacing="14">
+                            <Label Text="Mascotas"
+                                   FontSize="24"
+                                   FontAttributes="Bold"
+                                   TextColor="#FF8C42"/>
+
+                            <Frame BackgroundColor="#FF8C42"
+                                   Padding="0"
+                                   CornerRadius="25"
+                                   HeightRequest="40"
+                                   WidthRequest="40"
+                                   HasShadow="True">
+                                <Label Text="+"
+                                       FontSize="26"
+                                       FontAttributes="Bold"
+                                       TextColor="White"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="Center">
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding AñadirMascotaCommand}"/>
+                                    </Label.GestureRecognizers>
+                                </Label>
+                            </Frame>
+                        </HorizontalStackLayout>
+
+                        <CollectionView ItemsSource="{Binding ListaMascotas}">
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Frame Padding="18"
+                                           BackgroundColor="#FFF1E3"
+                                           BorderColor="#FF8C42"
+                                           CornerRadius="18"
+                                           HasShadow="True">
+
+                                        <VerticalStackLayout Spacing="15">
+
+                                            <HorizontalStackLayout HorizontalOptions="End">
+                                                <Frame BackgroundColor="#FFD6D6"
+                                                       Padding="6"
+                                                       CornerRadius="15">
+                                                    <Label Text="🗑️"
+                                                           FontSize="18"
+                                                           TextColor="Red">
+                                                        <Label.GestureRecognizers>
+                                                            <TapGestureRecognizer Command="{Binding BindingContext.EliminarMascotaCommand, Source={x:Reference PageRoot}}"
+                                                                                  CommandParameter="{Binding .}"/>
+                                                        </Label.GestureRecognizers>
+                                                    </Label>
+                                                </Frame>
+                                            </HorizontalStackLayout>
+
+                                            <Entry Placeholder="Nombre"
+                                                   Text="{Binding Nombre}"
+                                                   FontSize="18"
+                                                   FontAttributes="Bold"/>
+
+                                            <Picker Title="Tipo"
+                                                    ItemsSource="{Binding BindingContext.TiposMascota, Source={x:Reference PageRoot}}"
+                                                    SelectedItem="{Binding Tipo}"
+                                                    FontSize="16"
+                                                    TextColor="#FF8C42"/>
+
+                                            <Entry Placeholder="Otro tipo"
+                                                   Text="{Binding OtroTipo}"
+                                                   FontSize="16"/>
+
+                                            <Editor Placeholder="Notas"
+                                                    Text="{Binding Notas}"
+                                                    AutoSize="TextChanges"/>
+                                        </VerticalStackLayout>
+
+                                    </Frame>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+
+                        <!-- CAMPOS GENERALES MASCOTA -->
+                        <Editor Placeholder="Alergias"
+                                Text="{Binding AlergiasMascota}"
+                                AutoSize="TextChanges"/>
+
+                        <Editor Placeholder="Medicaciones importantes"
+                                Text="{Binding MedicacionMascota}"
+                                AutoSize="TextChanges"/>
+
+                        <VerticalStackLayout Spacing="10">
+                            <Label Text="Horarios de paseo"
+                                   FontSize="18"
+                                   FontAttributes="Bold"
+                                   TextColor="#FF8C42"/>
+
+                            <Entry Placeholder="Mañana"
+                                   Text="{Binding PaseoMañana}"/>
+
+                            <Entry Placeholder="Tarde"
+                                   Text="{Binding PaseoTarde}"/>
+
+                            <Entry Placeholder="Noche"
+                                   Text="{Binding PaseoNoche}"/>
+                        </VerticalStackLayout>
+
+                        <Editor Placeholder="Rutinas importantes (comidas, hábitos...)"
+                                Text="{Binding RutinasMascota}"
+                                AutoSize="TextChanges"/>
+
+                        <VerticalStackLayout Spacing="10">
+                            <Label Text="Contacto de emergencia"
+                                   FontSize="18"
+                                   FontAttributes="Bold"
+                                   TextColor="#FF8C42"/>
+
+                            <Entry Placeholder="Nombre"
+                                   Text="{Binding ContactoNombreMascota}"/>
+
+                            <Entry Placeholder="Teléfono"
+                                   Text="{Binding ContactoTelefonoMascota}"
+                                   Keyboard="Telephone"/>
+                        </VerticalStackLayout>
+
+                    </VerticalStackLayout>
+                </Frame>
+
+                <!-- ========================= -->
+                <!--         SECCIÓN AMBOS     -->
+                <!-- ========================= -->
+                <Frame BackgroundColor="White"
+                       CornerRadius="25"
+                       Padding="25"
+                       BorderColor="#2CB67D"
+                       HasShadow="True"
+                       IsVisible="{Binding MostrarAmbos}">
+
+                    <VerticalStackLayout Spacing="25">
+
+                        <Label Text="Niños y Mascotas"
+                               FontSize="24"
+                               FontAttributes="Bold"
+                               TextColor="#2CB67D"/>
+
+                        <!-- NIÑOS -->
+                        <HorizontalStackLayout Spacing="14">
+                            <Label Text="Niños"
+                                   FontSize="20"
+                                   FontAttributes="Bold"
+                                   TextColor="#2CB67D"/>
+
+                            <Frame BackgroundColor="#2CB67D"
+                                   Padding="0"
+                                   CornerRadius="25"
+                                   HeightRequest="40"
+                                   WidthRequest="40"
+                                   HasShadow="True">
+                                <Label Text="+"
+                                       FontSize="26"
+                                       FontAttributes="Bold"
+                                       TextColor="White"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="Center">
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding AñadirNiñoCommand}"/>
+                                    </Label.GestureRecognizers>
+                                </Label>
+                            </Frame>
+                        </HorizontalStackLayout>
+
+                        <CollectionView ItemsSource="{Binding ListaNiños}">
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Frame Padding="18"
+                                           BackgroundColor="#E8FFF4"
+                                           BorderColor="#2CB67D"
+                                           CornerRadius="18"
+                                           HasShadow="True">
+
+                                        <VerticalStackLayout Spacing="15">
+
+                                            <HorizontalStackLayout HorizontalOptions="End">
+                                                <Frame BackgroundColor="#FFD6D6"
+                                                       Padding="6"
+                                                       CornerRadius="15">
+                                                    <Label Text="🗑️"
+                                                           FontSize="18"
+                                                           TextColor="Red">
+                                                        <Label.GestureRecognizers>
+                                                            <TapGestureRecognizer Command="{Binding BindingContext.EliminarNiñoCommand, Source={x:Reference PageRoot}}"
+                                                                                  CommandParameter="{Binding .}"/>
+                                                        </Label.GestureRecognizers>
+                                                    </Label>
+                                                </Frame>
+                                            </HorizontalStackLayout>
+
+                                            <Entry Placeholder="Nombre"
+                                                   Text="{Binding Nombre}"
+                                                   FontSize="18"
+                                                   FontAttributes="Bold"/>
+
+                                            <DatePicker Date="{Binding FechaNacimiento}"
+                                                        FontSize="16"
+                                                        TextColor="#2CB67D"/>
+
+                                            <Editor Placeholder="Notas"
+                                                    Text="{Binding Notas}"
+                                                    AutoSize="TextChanges"/>
+                                        </VerticalStackLayout>
+
+                                    </Frame>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+
+                        <!-- CAMPOS GENERALES NIÑOS -->
+                        <Editor Placeholder="Alergias (niños)"
+                                Text="{Binding AlergiasNiño}"
+                                AutoSize="TextChanges"/>
+
+                        <Editor Placeholder="Medicaciones importantes (niños)"
+                                Text="{Binding MedicacionNiño}"
+                                AutoSize="TextChanges"/>
+
+                        <Editor Placeholder="Rutinas importantes (niños)"
+                                Text="{Binding RutinasNiño}"
+                                AutoSize="TextChanges"/>
+
+                        <VerticalStackLayout Spacing="10">
+                            <Label Text="Contacto de emergencia (niños)"
+                                   FontSize="18"
+                                   FontAttributes="Bold"
+                                   TextColor="#2CB67D"/>
+
+                            <Entry Placeholder="Nombre"
+                                   Text="{Binding ContactoNombreNiño}"/>
+
+                            <Entry Placeholder="Teléfono"
+                                   Text="{Binding ContactoTelefonoNiño}"
+                                   Keyboard="Telephone"/>
+                        </VerticalStackLayout>
+
+                        <!-- MASCOTAS -->
+                        <HorizontalStackLayout Spacing="14">
+                            <Label Text="Mascotas"
+                                   FontSize="20"
+                                   FontAttributes="Bold"
+                                   TextColor="#2CB67D"/>
+
+                            <Frame BackgroundColor="#2CB67D"
+                                   Padding="0"
+                                   CornerRadius="25"
+                                   HeightRequest="40"
+                                   WidthRequest="40"
+                                   HasShadow="True">
+                                <Label Text="+"
+                                       FontSize="26"
+                                       FontAttributes="Bold"
+                                       TextColor="White"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="Center">
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding AñadirMascotaCommand}"/>
+                                    </Label.GestureRecognizers>
+                                </Label>
+                            </Frame>
+                        </HorizontalStackLayout>
+
+                        <CollectionView ItemsSource="{Binding ListaMascotas}">
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Frame Padding="18"
+                                           BackgroundColor="#E8FFF4"
+                                           BorderColor="#2CB67D"
+                                           CornerRadius="18"
+                                           HasShadow="True">
+
+                                        <VerticalStackLayout Spacing="15">
+
+                                            <HorizontalStackLayout HorizontalOptions="End">
+                                                <Frame BackgroundColor="#FFD6D6"
+                                                       Padding="6"
+                                                       CornerRadius="15">
+                                                    <Label Text="🗑️"
+                                                           FontSize="18"
+                                                           TextColor="Red">
+                                                        <Label.GestureRecognizers>
+                                                            <TapGestureRecognizer Command="{Binding BindingContext.EliminarMascotaCommand, Source={x:Reference PageRoot}}"
+                                                                                  CommandParameter="{Binding .}"/>
+                                                        </Label.GestureRecognizers>
+                                                    </Label>
+                                                </Frame>
+                                            </HorizontalStackLayout>
+
+                                            <Entry Placeholder="Nombre"
+                                                   Text="{Binding Nombre}"
+                                                   FontSize="18"
+                                                   FontAttributes="Bold"/>
+
+                                            <Picker Title="Tipo"
+                                                    ItemsSource="{Binding BindingContext.TiposMascota, Source={x:Reference PageRoot}}"
+                                                    SelectedItem="{Binding Tipo}"
+                                                    FontSize="16"
+                                                    TextColor="#2CB67D"/>
+
+                                            <Entry Placeholder="Otro tipo"
+                                                   Text="{Binding OtroTipo}"
+                                                   FontSize="16"/>
+
+                                            <Editor Placeholder="Notas"
+                                                    Text="{Binding Notas}"
+                                                    AutoSize="TextChanges"/>
+                                        </VerticalStackLayout>
+
+                                    </Frame>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+
+                        <!-- CAMPOS GENERALES MASCOTAS -->
+                        <Editor Placeholder="Alergias (mascotas)"
+                                Text="{Binding AlergiasMascota}"
+                                AutoSize="TextChanges"/>
+
+                        <Editor Placeholder="Medicaciones importantes (mascotas)"
+                                Text="{Binding MedicacionMascota}"
+                                AutoSize="TextChanges"/>
+
+                        <Editor Placeholder="Rutinas importantes (mascotas)"
+                                Text="{Binding RutinasMascota}"
+                                AutoSize="TextChanges"/>
+
+                        <VerticalStackLayout Spacing="10">
+                            <Label Text="Contacto de emergencia (mascotas)"
+                                   FontSize="18"
+                                   FontAttributes="Bold"
+                                   TextColor="#2CB67D"/>
+
+                            <Entry Placeholder="Nombre"
+                                   Text="{Binding ContactoNombreMascota}"/>
+
+                            <Entry Placeholder="Teléfono"
+                                   Text="{Binding ContactoTelefonoMascota}"
+                                   Keyboard="Telephone"/>
+                        </VerticalStackLayout>
+
+                    </VerticalStackLayout>
+                </Frame>
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+    </Grid>
+</ContentPage>

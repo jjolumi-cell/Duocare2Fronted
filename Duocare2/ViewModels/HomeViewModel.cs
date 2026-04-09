@@ -1,17 +1,36 @@
+using System.Collections.ObjectModel;
+
 namespace Duocare2.ViewModels;
 
 public class HomeViewModel : BaseViewModel
 {
-    public string NombreNiño { get; set; } = "No registrado";
-    public string NombreMascota { get; set; } = "No registrado";
+    public string ChildName { get; set; }
+    public string PetName { get; set; }
 
-    public bool HayPerfilCompleto
+    public bool ShowChildCalendar { get; set; }
+    public bool ShowPetCalendar { get; set; }
+
+    public Command ToggleChildCalendarCommand { get; }
+    public Command TogglePetCalendarCommand { get; }
+
+    public ObservableCollection<string> ChildEvents { get; set; } = new();
+    public ObservableCollection<string> PetEvents { get; set; } = new();
+
+    public HomeViewModel()
     {
-        get
+        ChildName = Preferences.Get("ChildName", "Not registered");
+        PetName = Preferences.Get("PetName", "Not registered");
+
+        ToggleChildCalendarCommand = new Command(() =>
         {
-            bool tieneNiño = NombreNiño != "No registrado";
-            bool tieneMascota = NombreMascota != "No registrado";
-            return tieneNiño || tieneMascota;
-        }
+            ShowChildCalendar = !ShowChildCalendar;
+            OnPropertyChanged(nameof(ShowChildCalendar));
+        });
+
+        TogglePetCalendarCommand = new Command(() =>
+        {
+            ShowPetCalendar = !ShowPetCalendar;
+            OnPropertyChanged(nameof(ShowPetCalendar));
+        });
     }
 }

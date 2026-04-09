@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Duocare2.Views.ChildCalendarPage"
+             x:Name="RootPage">
+
+    <ContentPage.Resources>
+        <Color x:Key="ColorCabecera">#FFCC33</Color>
+        <Color x:Key="ColorTarea">#4A90E2</Color>
+        <Color x:Key="ColorEvento">#F5A623</Color>
+    </ContentPage.Resources>
+
+    <ContentPage.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#1E2A78" Offset="0.0" />
+            <GradientStop Color="#3A4FCF" Offset="0.5" />
+            <GradientStop Color="#A8C0FF" Offset="1.0" />
+        </LinearGradientBrush>
+    </ContentPage.Background>
+
+    <Grid Padding="20" RowDefinitions="Auto, Auto, *">
+
+        <!-- CABECERA -->
+        <Grid Grid.Row="0" ColumnDefinitions="Auto, *, Auto" VerticalOptions="Center">
+            <Button Text="Hoy"
+                    BackgroundColor="{StaticResource ColorCabecera}"
+                    TextColor="Black"
+                    CornerRadius="15"
+                    Padding="10,5"
+                    Command="{Binding IrHoyCommand}"/>
+
+            <Label Grid.Column="1"
+                   Text="{Binding MesActual}"
+                   FontSize="26"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"
+                   TextColor="White"/>
+
+            <HorizontalStackLayout Grid.Column="2" Spacing="10">
+                <Button Text="◀"
+                        BackgroundColor="{StaticResource ColorCabecera}"
+                        TextColor="Black"
+                        CornerRadius="15"
+                        WidthRequest="40"
+                        Command="{Binding MesAnteriorCommand}"/>
+
+                <Button Text="▶"
+                        BackgroundColor="{StaticResource ColorCabecera}"
+                        TextColor="Black"
+                        CornerRadius="15"
+                        WidthRequest="40"
+                        Command="{Binding MesSiguienteCommand}"/>
+            </HorizontalStackLayout>
+        </Grid>
+
+        <!-- DÍAS DE LA SEMANA -->
+        <Grid Grid.Row="1" ColumnDefinitions="*,*,*,*,*,*,*" Padding="0,20">
+            <Label Text="DOM" HorizontalOptions="Center" TextColor="White"/>
+            <Label Grid.Column="1" Text="LUN" HorizontalOptions="Center" TextColor="White"/>
+            <Label Grid.Column="2" Text="MAR" HorizontalOptions="Center" TextColor="White"/>
+            <Label Grid.Column="3" Text="MIE" HorizontalOptions="Center" TextColor="White"/>
+            <Label Grid.Column="4" Text="JUE" HorizontalOptions="Center" TextColor="White"/>
+            <Label Grid.Column="5" Text="VIE" HorizontalOptions="Center" TextColor="White"/>
+            <Label Grid.Column="6" Text="SAB" HorizontalOptions="Center" TextColor="White"/>
+        </Grid>
+
+        <!-- GRID DE DÍAS -->
+        <CollectionView Grid.Row="2"
+                        ItemsSource="{Binding DaysOfMonth}"
+                        ItemsLayout="VerticalGrid, 7"
+                        Margin="0"
+                        SelectionMode="None">
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Border Stroke="Black"
+                            StrokeThickness="1"
+                            Background="White"
+                            StrokeShape="RoundRectangle 12"
+                            Margin="4">
+
+                        <Border.Triggers>
+                            <DataTrigger TargetType="Border"
+                                         Binding="{Binding IsPlaceholder}"
+                                         Value="True">
+                                <Setter Property="Background" Value="Transparent"/>
+                                <Setter Property="StrokeThickness" Value="0"/>
+                            </DataTrigger>
+                        </Border.Triggers>
+
+                        <Grid Padding="0" RowDefinitions="Auto, Auto">
+
+                            <Label Text="{Binding Number}"
+                                   FontSize="18"
+                                   FontAttributes="Bold"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center"
+                                   TextColor="#333">
+                                <Label.Triggers>
+                                    <DataTrigger TargetType="Label"
+                                                 Binding="{Binding IsPlaceholder}"
+                                                 Value="True">
+                                        <Setter Property="IsVisible" Value="False"/>
+                                    </DataTrigger>
+                                </Label.Triggers>
+                            </Label>
+
+                            <Grid Grid.Row="1" ColumnDefinitions="Auto,Auto" HorizontalOptions="Center">
+                                <Grid.Triggers>
+                                    <DataTrigger TargetType="Grid"
+                                                 Binding="{Binding IsPlaceholder}"
+                                                 Value="True">
+                                        <Setter Property="IsVisible" Value="False"/>
+                                    </DataTrigger>
+                                </Grid.Triggers>
+
+                                <BoxView WidthRequest="14"
+                                         HeightRequest="14"
+                                         CornerRadius="3"
+                                         Color="{StaticResource ColorTarea}"
+                                         IsVisible="{Binding HasTask}"
+                                         Margin="2"/>
+
+                                <BoxView Grid.Column="1"
+                                         WidthRequest="14"
+                                         HeightRequest="14"
+                                         CornerRadius="3"
+                                         Color="{StaticResource ColorEvento}"
+                                         IsVisible="{Binding HasEvent}"
+                                         Margin="2"/>
+                            </Grid>
+
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer 
+                                    Tapped="OnDayTapped"
+                                    CommandParameter="{Binding}"/>
+                            </Grid.GestureRecognizers>
+
+                        </Grid>
+
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+
+        </CollectionView>
+
+        <!-- BOTÓN FLOTANTE -->
+        <Button Text="+"
+                FontSize="28"
+                CornerRadius="40"
+                WidthRequest="70"
+                HeightRequest="70"
+                BackgroundColor="#4CAF50"
+                TextColor="White"
+                HorizontalOptions="End"
+                VerticalOptions="End"
+                Margin="0,0,10,10"
+                Clicked="OnFabClicked"
+                Grid.Row="2"/>
+
+        <!-- FONDO OSCURO POPUP -->
+        <BoxView x:Name="PopupFondo"
+                 IsVisible="False"
+                 BackgroundColor="#80000000"
+                 Opacity="0"
+                 ZIndex="5"/>
+
+        <!-- POPUP CENTRADO -->
+        <Frame x:Name="PopupDia"
+               IsVisible="False"
+               CornerRadius="25"
+               Padding="25"
+               BackgroundColor="White"
+               HasShadow="True"
+               VerticalOptions="Center"
+               HorizontalOptions="Center"
+               WidthRequest="330"
+               ZIndex="10"
+               Scale="0">
+
+            <VerticalStackLayout Spacing="20">
+
+                <Label x:Name="PopupTitulo"
+                       Text="Día X"
+                       FontSize="26"
+                       FontAttributes="Bold"
+                       HorizontalOptions="Center"
+                       TextColor="#333"/>
+
+                <VerticalStackLayout>
+                    <Label Text="Fecha" FontAttributes="Bold" TextColor="#333"/>
+                    <DatePicker x:Name="PopupFecha"
+                                Format="dd/MM/yyyy"
+                                TextColor="Black"/>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout>
+                    <Label Text="Hora" FontAttributes="Bold" TextColor="#333"/>
+                    <TimePicker x:Name="PopupHora"
+                                Time="12:00"
+                                TextColor="Black"
+                                Format="HH:mm"/>
+                </VerticalStackLayout>
+
+                <Editor x:Name="PopupDescripcion"
+                        Placeholder="Añade una descripción…"
+                        HeightRequest="80"
+                        BackgroundColor="#F2F2F2"
+                        TextColor="Black"/>
+
+                <Button Text="Guardar"
+                        BackgroundColor="#4CAF50"
+                        TextColor="White"
+                        CornerRadius="15"
+                        Clicked="GuardarPopup"/>
+
+                <Button Text="Eliminar"
+                        BackgroundColor="#E53935"
+                        TextColor="White"
+                        CornerRadius="15"
+                        Clicked="EliminarPopup"/>
+
+                <Button Text="Cerrar"
+                        BackgroundColor="#CCCCCC"
+                        TextColor="Black"
+                        CornerRadius="15"
+                        Clicked="CerrarPopup"/>
+
+            </VerticalStackLayout>
+
+        </Frame>
+
+    </Grid>
+
+</ContentPage>

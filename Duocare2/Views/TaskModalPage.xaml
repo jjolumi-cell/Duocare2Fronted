@@ -1,0 +1,42 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Duocare2.Views.TaskModalPage"
+             BackgroundColor="#F5F5F5">
+
+    <VerticalStackLayout Padding="25" Spacing="20">
+
+        <Label Text="{Binding Title}"
+           FontSize="24"
+           FontAttributes="Bold"
+           HorizontalOptions="Center"/>
+
+        <Label Text="Fecha" FontAttributes="Bold"/>
+        <Label Text="{Binding DateText}" />
+
+        <Frame BackgroundColor="White"
+           CornerRadius="10"
+           Padding="10"
+           HasShadow="False">
+
+            <Editor Text="{Binding Description}"
+                Placeholder="Añade una descripción..."
+                AutoSize="TextChanges"
+                BackgroundColor="Transparent"/>
+        </Frame>
+
+        <Button Text="Guardar"
+            Command="{Binding SaveCommand}"
+            BackgroundColor="#4CAF50"
+            TextColor="White"
+            CornerRadius="10"/>
+
+        <Button Text="Cerrar"
+            Command="{Binding CloseCommand}"
+            BackgroundColor="#BDBDBD"
+            TextColor="Black"
+            CornerRadius="10"/>
+
+    </VerticalStackLayout>
+
+
+</ContentPage>

@@ -24,6 +24,6 @@ public class ForgotPasswordViewModel : BaseViewModel
             "Si el correo existe, recibirás instrucciones para recuperar tu contraseña.",
             "OK");
 
-        await Shell.Current.GoToAsync("login");
+        await Shell.Current.GoToAsync("///login");
     }
 }

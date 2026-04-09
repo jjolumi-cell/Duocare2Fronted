@@ -11,6 +11,21 @@
         </LinearGradientBrush>
     </ContentPage.Background>
 
+    <!-- Selector de idioma en esquina superior derecha -->
+    <Grid Padding="20">
+        <HorizontalStackLayout HorizontalOptions="End" VerticalOptions="Start">
+            <Picker x:Name="LanguagePicker"
+                    WidthRequest="120"
+                    Title="Idioma"
+                    SelectedIndexChanged="OnLanguageChanged">
+                <Picker.Items>
+                    <x:String>Español</x:String>
+                    <x:String>English</x:String>
+                </Picker.Items>
+            </Picker>
+        </HorizontalStackLayout>
+    </Grid>
+
     <ScrollView>
         <VerticalStackLayout Padding="30" Spacing="30">
 

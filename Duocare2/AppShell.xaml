@@ -3,37 +3,90 @@
     x:Class="Duocare2.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:views="clr-namespace:Duocare2.Views">
+    xmlns:views="clr-namespace:Duocare2.Views"
+    xmlns:conv="clr-namespace:Duocare2.Converters">
 
-    <!-- ENCABEZADO DEL MENÚ LATERAL -->
+    <Shell.Resources>
+        <ResourceDictionary>
+            <conv:StringNotEmptyConverter x:Key="StringNotEmptyConverter" />
+        </ResourceDictionary>
+    </Shell.Resources>
+
+    <!-- ENCABEZADO DEL MENÚ -->
     <Shell.FlyoutHeader>
-        ...
+        <Grid BackgroundColor="#333" Padding="20">
+            <VerticalStackLayout>
+
+                <Label Text="Hola"
+                       FontSize="18"
+                       TextColor="White"
+                       IsVisible="{Binding ParentName, Converter={StaticResource StringNotEmptyConverter}}"/>
+
+                <Label Text="{Binding ParentName}"
+                       FontSize="26"
+                       FontAttributes="Bold"
+                       TextColor="White"
+                       HorizontalOptions="Center"
+                       IsVisible="{Binding ParentName, Converter={StaticResource StringNotEmptyConverter}}"/>
+
+                <Label Text="{Binding ChildName}"
+                       FontSize="20"
+                       TextColor="White"
+                       HorizontalOptions="Center"
+                       IsVisible="{Binding ChildName, Converter={StaticResource StringNotEmptyConverter}}"/>
+
+            </VerticalStackLayout>
+        </Grid>
     </Shell.FlyoutHeader>
 
-    <!-- MENÚ LATERAL -->
-    <FlyoutItem Title="Inicio" Route="home">
-        <ShellContent ContentTemplate="{DataTemplate views:HomePage}" />
+    <!-- OPCIONES PRINCIPALES -->
+    <FlyoutItem Title="🏠 Inicio">
+        <ShellContent
+            Title="Inicio"
+            Route="home"
+            ContentTemplate="{DataTemplate views:HomePage}" />
     </FlyoutItem>
 
-    <FlyoutItem Title="Medicamentos">
-        <ShellContent ContentTemplate="{DataTemplate views:MedicamentosPage}" />
+    <FlyoutItem Title="📄 Ficha">
+        <ShellContent
+            Title="Ficha"
+            Route="ficha"
+            ContentTemplate="{DataTemplate views:ProfilePage}" />
     </FlyoutItem>
 
-    <FlyoutItem Title="Paseos">
-        <ShellContent ContentTemplate="{DataTemplate views:PaseosPage}" />
+    <FlyoutItem Title="🔐 Login">
+        <ShellContent
+            Title="Login"
+            Route="login"
+            ContentTemplate="{DataTemplate views:LoginPage}" />
     </FlyoutItem>
 
-    <FlyoutItem Title="Extraescolares">
-        <ShellContent ContentTemplate="{DataTemplate views:ExtraescolaresPage}" />
+    <FlyoutItem Title="🧾 Registro">
+        <ShellContent
+            Title="Registro"
+            Route="registro"
+            ContentTemplate="{DataTemplate views:RegisterPage}" />
     </FlyoutItem>
 
-    <FlyoutItem Title="Alergias">
-        <ShellContent ContentTemplate="{DataTemplate views:AlergiasPage}" />
-    </FlyoutItem>
+    <!-- PIE DEL MENÚ (SIEMPRE ABAJO) -->
+    <Shell.FlyoutFooter>
+        <VerticalStackLayout Padding="20" Spacing="10">
 
-    <!-- RUTAS EXTRA (necesarias para navegar) -->
-    <ShellContent Route="login" ContentTemplate="{DataTemplate views:LoginPage}" />
-    <ShellContent Route="register" ContentTemplate="{DataTemplate views:RegisterPage}" />
-    <ShellContent Route="forgotpassword" ContentTemplate="{DataTemplate views:ForgotPasswordPage}" />
+            <Button
+                Text="ℹ️ Acerca de la aplicación"
+                BackgroundColor="Transparent"
+                TextColor="White"
+                HorizontalOptions="Start"
+                Clicked="OnAboutClicked" />
+
+            <Button
+                Text="📕 Cerrar sesión"
+                BackgroundColor="Transparent"
+                TextColor="White"
+                HorizontalOptions="Start"
+                Clicked="OnLogoutClicked" />
+
+        </VerticalStackLayout>
+    </Shell.FlyoutFooter>
 
 </Shell>

@@ -1,0 +1,118 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Duocare2.Views.AboutPage"
+             Title="Acerca de la aplicación">
+
+    <!-- FONDO DEGRADADO PROFESIONAL -->
+    <ContentPage.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Color="#6FB1FC" Offset="0.0" />
+            <GradientStop Color="#A7C7FF" Offset="1.0" />
+        </LinearGradientBrush>
+    </ContentPage.Background>
+
+    <ScrollView>
+        <VerticalStackLayout Padding="30" Spacing="30">
+
+            <!-- LOGO / IDENTIDAD -->
+            <Frame BackgroundColor="White"
+                   CornerRadius="25"
+                   Padding="30"
+                   HasShadow="True"
+                   HorizontalOptions="Center">
+                <Label Text="DC"
+                       FontSize="52"
+                       FontAttributes="Bold"
+                       TextColor="#1A1A1A"
+                       HorizontalOptions="Center" />
+            </Frame>
+
+            <!-- TÍTULO PRINCIPAL -->
+            <Label Text="Duocare 2"
+                   FontSize="34"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"
+                   TextColor="#1A1A1A" />
+
+            <!-- SUBTÍTULO -->
+            <Label Text="Versión 1.0.0"
+                   FontSize="16"
+                   HorizontalOptions="Center"
+                   TextColor="#333" />
+
+            <!-- SECCIÓN: INFORMACIÓN GENERAL -->
+            <Frame BackgroundColor="White"
+                   CornerRadius="20"
+                   Padding="25"
+                   HasShadow="True">
+
+                <VerticalStackLayout Spacing="15">
+
+                    <Label Text="Información general"
+                           FontSize="22"
+                           FontAttributes="Bold"
+                           TextColor="#1A1A1A" />
+
+                    <Label Text="Duocare es una plataforma diseñada para facilitar la gestión diaria de cuidados, calendarios, fichas médicas, alergias y medicación."
+                           FontSize="16"
+                           TextColor="#444" />
+
+                    <Label Text="Su objetivo es ofrecer una experiencia clara, segura y eficiente para familias y cuidadores."
+                           FontSize="16"
+                           TextColor="#444" />
+                </VerticalStackLayout>
+
+            </Frame>
+
+            <!-- SECCIÓN: TECNOLOGÍA -->
+            <Frame BackgroundColor="White"
+                   CornerRadius="20"
+                   Padding="25"
+                   HasShadow="True">
+
+                <VerticalStackLayout Spacing="15">
+
+                    <Label Text="Tecnología"
+                           FontSize="22"
+                           FontAttributes="Bold"
+                           TextColor="#1A1A1A" />
+
+                    <Label Text=".NET MAUI — Aplicación multiplataforma optimizada para Android, iOS y Windows."
+                           FontSize="16"
+                           TextColor="#444" />
+
+                    <Label Text="Arquitectura MVVM — Garantiza escalabilidad, mantenibilidad y separación clara de responsabilidades."
+                           FontSize="16"
+                           TextColor="#444" />
+                </VerticalStackLayout>
+
+            </Frame>
+
+            <!-- SECCIÓN: CRÉDITOS -->
+            <Frame BackgroundColor="White"
+                   CornerRadius="20"
+                   Padding="25"
+                   HasShadow="True">
+
+                <VerticalStackLayout Spacing="15">
+
+                    <Label Text="Créditos"
+                           FontSize="22"
+                           FontAttributes="Bold"
+                           TextColor="#1A1A1A" />
+
+                    <Label Text="Duocare"
+                           FontSize="17"
+                           TextColor="#444" />
+
+                    <Label Text="Torrejón de Ardoz, Madrid"
+                           FontSize="15"
+                           TextColor="#666" />
+                </VerticalStackLayout>
+
+            </Frame>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
